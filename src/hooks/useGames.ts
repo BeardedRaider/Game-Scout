@@ -4,9 +4,10 @@ import { CanceledError } from "axios";
 
 
 
-interface Game {
+export interface Game {
   id: number;
   name: string;
+    background_image: string;
 }// Define interface for the API response
 
 interface FetchGamesResponse {
