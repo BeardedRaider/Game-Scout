@@ -9,11 +9,12 @@ export interface Platform {
   slug: string;
 }
 
-export interface Game {
+export interface Game { // Define interface for a game
   id: number;
   name: string;
     background_image: string;
     parent_platforms: { platform: Platform}[];
+    metacritic: number;
 }// Define interface for the API response
 
 interface FetchGamesResponse {
