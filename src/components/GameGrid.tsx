@@ -6,7 +6,7 @@ import GameCardContainer from "./GameCardContainer";
 // Define TypeScript interfaces for the game data
 
 const GameGrid = () => {
-  const { games, error, isLoading } = useGames();
+  const { data, error, isLoading } = useGames();
   const skeletons = [1, 2, 3, 4, 5, 6]; // Create an array of 6 skeletons
 
   return (
@@ -26,7 +26,7 @@ const GameGrid = () => {
             </GameCardContainer>
           ))}
         {/* // Map through the games and display their names */}
-        {games.map((game) => (
+        {data.map((game) => (
           // Each game is rendered as a list item with a unique key
           <GameCardContainer>
             <GameCard key={game.id} game={game} />
