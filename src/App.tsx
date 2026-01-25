@@ -12,7 +12,7 @@ function App() {
       }}
       templateColumns={{ 
         base: "1fr", // for small devices and fill the entire width
-        lg: "200px 1fr" }} // for large devices, aside takes 200px and main takes the rest
+        lg: "200px 1fr" }} // for large devices, aside (genres) take up 200px maximum and main takes the rest
     >
       {/* Components will go here */}
       <GridItem area="nav">
