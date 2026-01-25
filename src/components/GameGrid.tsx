@@ -1,7 +1,8 @@
-import { SimpleGrid, Text } from "@chakra-ui/react";
+import { SimpleGrid, Skeleton, Text } from "@chakra-ui/react";
 import useGames from "../hooks/useGames";
 import GameCard from "./GameCard";
 import GameCardSkeleton from "./GameCardSkeleton";
+import GameCardContainer from "./GameCardContainer";
 // Define TypeScript interfaces for the game data
 
 const GameGrid = () => {
@@ -20,12 +21,16 @@ const GameGrid = () => {
         {isLoading &&
           skeletons.map((skeleton) => (
             // Render a GameCardSkeleton for each item in the skeletons array
-            <GameCardSkeleton key={skeleton} />
+            <GameCardContainer>
+              <GameCardSkeleton key={skeleton} />
+            </GameCardContainer>
           ))}
         {/* // Map through the games and display their names */}
         {games.map((game) => (
           // Each game is rendered as a list item with a unique key
-          <GameCard key={game.id} game={game} />
+          <GameCardContainer>
+            <GameCard key={game.id} game={game} />
+          </GameCardContainer>
         ))}
       </SimpleGrid>
     </>
