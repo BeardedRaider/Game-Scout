@@ -10,13 +10,16 @@ function App() {
         base: `"nav" "main"`,
         lg: `"nav nav" "aside main"`, //lrg devices more than 1024px
       }}
+      templateColumns={{ 
+        base: "1fr", // for small devices and fill the entire width
+        lg: "200px 1fr" }} // for large devices, aside takes 200px and main takes the rest
     >
-      {/* Your components will go here */}
+      {/* Components will go here */}
       <GridItem area="nav">
         <NavBar />
       </GridItem>
       <Show above="lg">
-        <GridItem area="aside">
+        <GridItem area="aside" paddingX={5}>
           <GenreList />
         </GridItem>
       </Show>
