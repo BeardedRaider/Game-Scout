@@ -1,6 +1,7 @@
+import noImage from '../assets/imgPlaceholder.webp';
 
 const getCroppedImageUrl = (url: string) => {
-    if (!url) return ''; // Return empty string if url is undefined or empty
+    if (!url) return noImage; // Return placeholder image if url is undefined or empty
     const target = 'media/';
     const index = url.lastIndexOf(target) + target.length;
     
