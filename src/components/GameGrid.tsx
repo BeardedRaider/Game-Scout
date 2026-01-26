@@ -11,6 +11,7 @@ interface Props {
 
 }
 
+// Functional component to display a grid of games
 const GameGrid = ({ gameQuery }: Props) => {
   const { data, error, isLoading } = useGames(gameQuery);
   const skeletons = [1, 2, 3, 4, 5, 6]; // Create an array of 6 skeletons
