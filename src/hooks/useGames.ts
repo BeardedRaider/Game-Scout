@@ -22,7 +22,8 @@ const useGames = ( gameQuery: GameQuery) =>
     { params: { 
       genres: gameQuery.genre?.id, 
       platforms: gameQuery.platform?.id,
-      ordering: gameQuery.sortOrder 
+      ordering: gameQuery.sortOrder,
+      search: gameQuery.searchText
     } },
     [
 // This array contains the dependencies for the hook that will trigger a refetch when they change
