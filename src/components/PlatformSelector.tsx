@@ -1,7 +1,6 @@
 import type { Platform } from '@/hooks/useGames';
 import usePlatforms from '@/hooks/usePlatforms'
 import { Button, Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react'
-import React from 'react'
 import { BiChevronDown } from 'react-icons/bi'
 
 interface Props {
