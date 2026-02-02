@@ -8,18 +8,17 @@ export interface Props {
     selectedGenre?: Genre | null;
 }
 
-
 const GenreList = ({ onSelectGenre, selectedGenre }: Props) => {
   const { data, isLoading, error } = useGenres();
 
   if (error) return null;
-  if (isLoading) return <Spinner />;
+  if (isLoading) return <Spinner />; //keeping the spinner for loading state just incase I decide to call from the server later
 
   return (
     <>
     <Heading fontSize='2xl' marginBottom={3}>Genres</Heading>
-      <List>
-        {data.map((genre) => (
+    <List>
+        {data?.results.map((genre) => (
           <ListItem key={genre.id} padding='4px'>
             <HStack>
               <Image
