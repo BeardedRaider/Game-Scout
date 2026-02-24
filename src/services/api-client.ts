@@ -7,4 +7,12 @@ const apiClient = axios.create({
   },
 });
 
+// Define interface for the API response
+export interface FetchResponse<T> {
+  count: number;
+  results: T[];
+
+}
+
+
 export default apiClient;

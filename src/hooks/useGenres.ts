@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import genresData from "../data/genres";
 import apiClient from "@/services/api-client";
-import type { FetchResponse } from "./useData";
+import type { FetchResponse } from "../services/api-client";
 
 export interface Genre {
   id: number;
@@ -23,8 +23,6 @@ const useGenres = () =>
     placeholderData: {
       count: genresArray.length,
       results: genresArray,
-      next: null,
-      previous: null,
     },
   });
 
