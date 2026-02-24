@@ -15,7 +15,7 @@ const GameGrid = ({ gameQuery }: Props) => {
   const { data, error, isLoading } = useGames(gameQuery);
   const skeletons = [1, 2, 3, 4, 5, 6]; // Create an array of 6 skeletons
 
-  if (error) return <Text>{error}</Text>;
+  if (error) return <Text>{error.message}</Text>;
 
   return (
     // This fragment displays either an error or the list of games
@@ -33,7 +33,7 @@ const GameGrid = ({ gameQuery }: Props) => {
           </GameCardContainer>
         ))}
       {/* // Map through the games and display their names */}
-      {data.map((game) => (
+      {data?.results.map((game) => (
         // Each game is rendered as a list item with a unique key
         <GameCardContainer key={game.id}>
           <GameCard game={game} />
