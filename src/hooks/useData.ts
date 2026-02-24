@@ -3,9 +3,11 @@ import { CanceledError, type AxiosRequestConfig } from "axios";
 import { useState, useEffect } from "react";
 
 // Define interface for the API response
-interface FetchResponse<T> {
+export interface FetchResponse<T> {
   count: number;
   results: T[];
+  next: string | null;
+  previous: string | null;
 }
 
 // Hook implementation goes here
