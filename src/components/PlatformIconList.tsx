@@ -1,10 +1,10 @@
 import {
-    FaWindows,
-    FaPlaystation,
-    FaXbox,
-    FaApple,
-    FaLinux,
-    FaAndroid,
+  FaWindows,
+  FaPlaystation,
+  FaXbox,
+  FaApple,
+  FaLinux,
+  FaAndroid,
 } from "react-icons/fa";
 // Md means Material Design ans is another popular icon library
 //Si means Simple Icons and is another popular icon library
@@ -13,7 +13,7 @@ import { SiNintendo } from "react-icons/si";
 import { MdPhoneIphone } from "react-icons/md";
 import { BsGlobe } from "react-icons/bs";
 import { HStack, Icon } from "@chakra-ui/react";
-import type { Platform } from "@/hooks/useGames";
+import type { Platform } from "@/hooks/usePlatforms";
 import type { IconType } from "react-icons";
 
 interface Props {
@@ -21,7 +21,7 @@ interface Props {
 }
 
 const PlatformIconList = ({ platforms }: Props) => {
-    const iconMap: { [key: string]: IconType} = {
+  const iconMap: { [key: string]: IconType } = {
     pc: FaWindows,
     playstation: FaPlaystation,
     xbox: FaXbox,
@@ -33,11 +33,10 @@ const PlatformIconList = ({ platforms }: Props) => {
     nintendo: SiNintendo,
   };
 
-
   return (
     <HStack marginY={1}>
       {platforms.map((platform) => (
-        <Icon key={platform.id} as={iconMap[platform.slug]} color='gray.500' />
+        <Icon key={platform.id} as={iconMap[platform.slug]} color="gray.500" />
       ))}
     </HStack>
   );
