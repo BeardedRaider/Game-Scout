@@ -1,6 +1,6 @@
+import { axiosInstance, type FetchResponse } from "@/services/api-client";
 import { useQuery } from "@tanstack/react-query";
-import { axiosInstance } from "@/services/api-client";
-import platformsData from "../data/platforms";
+import platforms from "../data/platforms";
 export interface Platform {
   id: number;
   name: string;
@@ -18,14 +18,14 @@ export interface Platform {
 }
 
 const usePlatforms = () =>
-  useQuery<Platform[]>({
+  useQuery<FetchResponse<Platform>, Error>({
     queryKey: ["platforms"],
     queryFn: () =>
       axiosInstance
-        .get<Platform[]>("/platforms/lists/parents")
+        .get<FetchResponse<Platform>>("/platforms/lists/parents")
         .then((res) => res.data),
     staleTime: 24 * 60 * 60 * 1000,
-    initialData: platformsData,
+    initialData: platforms,
   });
 
 export default usePlatforms;

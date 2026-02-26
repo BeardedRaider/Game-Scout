@@ -1,10 +1,12 @@
-import { useQuery } from "@tanstack/react-query";
-import genresData from "../data/genres";
 import APIClient from "@/services/api-client";
+import { useQuery } from "@tanstack/react-query";
+import genres from "../data/genres"; // Local static genre data shaped like RAWG's API
 import type { FetchResponse } from "../services/api-client";
 
-
+// Create a reusable API client for the /genres endpoint
 const apiClient = new APIClient<Genre>("/genres");
+
+// Define the Genre type based on RAWG's API response
 export interface Genre {
   id: number;
   name: string;
@@ -14,19 +16,13 @@ export interface Genre {
   games: { id: number; slug: string; name: string; added: number }[];
 }
 
-const genresArray = genresData.results;
-
+// Fetch genres using React Query
 const useGenres = () =>
   useQuery<FetchResponse<Genre>, Error>({
-    queryKey: ["genres"],
-    queryFn: () => apiClient.getAll(),
-    staleTime: 24 * 60 * 60 * 1000, // 24 hours in milliseconds
-    placeholderData: {
-      count: genresArray.length,
-      next: null,
-      previous: null,
-      results: genresArray,
-    },
+    queryKey: ["genres"], // Cache key for this query
+    queryFn: () => apiClient.getAll(), // Fetch genres from RAWG API
+    staleTime: 24 * 60 * 60 * 1000, // Keep data fresh for 24 hours
+    initialData: genres, // Use static local data immediately (no loading flash)
   });
 
 export default useGenres;
