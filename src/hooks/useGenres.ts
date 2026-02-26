@@ -17,12 +17,14 @@ export interface Genre {
 const genresArray = genresData.results;
 
 const useGenres = () =>
-  useQuery<FetchResponse<Genre>>({
+  useQuery<FetchResponse<Genre>, Error>({
     queryKey: ["genres"],
     queryFn: () => apiClient.getAll(),
-    staleTime: 24 * 60 * 60 * 1000,
+    staleTime: 24 * 60 * 60 * 1000, // 24 hours in milliseconds
     placeholderData: {
       count: genresArray.length,
+      next: null,
+      previous: null,
       results: genresArray,
     },
   });
