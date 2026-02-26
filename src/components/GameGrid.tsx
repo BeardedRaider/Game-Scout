@@ -1,10 +1,12 @@
-import { Box, Button, SimpleGrid, Text } from "@chakra-ui/react";
+import type { GameQuery } from "@/App";
+import { SimpleGrid, Spinner, Text } from "@chakra-ui/react";
+import React from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
 import useGames from "../hooks/useGames";
 import GameCard from "./GameCard";
-import GameCardSkeleton from "./GameCardSkeleton";
 import GameCardContainer from "./GameCardContainer";
-import type { GameQuery } from "@/App";
-import React from "react";
+import GameCardSkeleton from "./GameCardSkeleton";
+
 interface Props {
   gameQuery: GameQuery;
 }
@@ -23,38 +25,41 @@ const GameGrid = ({ gameQuery }: Props) => {
 
   if (error) return <Text>{error.message}</Text>;
 
+  const fetchGamesCount =
+    data?.pages.reduce((total, page) => total + page.results.length, 0) || 0; // Calculate the total number of games fetched across all pages
+
   return (
-    <Box padding={"10px"}>
-      // This fragment displays either an error or the list of games
-      <SimpleGrid
-        columns={{ sm: 1, md: 2, lg: 3, xl: 4 }}
-        spacing={6}
+      <InfiniteScroll
+        dataLength={fetchGamesCount}
+        hasMore={!!hasNextPage}
+        next={() => fetchNextPage()}
+        loader={<Spinner />}
       >
-        {/* Game card container this is for loading state */}
-        {isLoading &&
-          skeletons.map((skeleton) => (
-            // Render a GameCardSkeleton for each item in the skeletons array
-            <GameCardContainer key={skeleton}>
-              <GameCardSkeleton />
-            </GameCardContainer>
-          ))}
-        {data?.pages.map((page, index) => (
-          <React.Fragment key={index}>
-            {page.results.map((game) => (
-              // Each game is rendered as a list item with a unique key
-              <GameCardContainer key={game.id}>
-                <GameCard game={game} />
+        <SimpleGrid
+          columns={{ sm: 1, md: 2, lg: 3, xl: 4 }}
+          spacing={6}
+          padding={"10px"}
+        >
+          {/* Game card container this is for loading state */}
+          {isLoading &&
+            skeletons.map((skeleton) => (
+              // Render a GameCardSkeleton for each item in the skeletons array
+              <GameCardContainer key={skeleton}>
+                <GameCardSkeleton />
               </GameCardContainer>
             ))}
-          </React.Fragment>
-        ))}
-      </SimpleGrid>
-      {hasNextPage && ( 
-        <Button onClick={() => fetchNextPage()} marginY={4}>
-          {isFetchingNextPage ? 'Loading...' : 'Load More'}
-      </Button>
-      )}
-    </Box>
+          {data?.pages.map((page, index) => (
+            <React.Fragment key={index}>
+              {page.results.map((game) => (
+                // Each game is rendered as a list item with a unique key
+                <GameCardContainer key={game.id}>
+                  <GameCard game={game} />
+                </GameCardContainer>
+              ))}
+            </React.Fragment>
+          ))}
+        </SimpleGrid>
+      </InfiniteScroll>
   );
 };
 
