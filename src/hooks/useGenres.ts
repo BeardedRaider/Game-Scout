@@ -1,5 +1,6 @@
 import APIClient from "@/services/api-client";
 import { useQuery } from "@tanstack/react-query";
+import ms from "ms";
 import genres from "../data/genres"; // Local static genre data shaped like RAWG's API
 import type { FetchResponse } from "../services/api-client";
 
@@ -21,7 +22,7 @@ const useGenres = () =>
   useQuery<FetchResponse<Genre>, Error>({
     queryKey: ["genres"], // Cache key for this query
     queryFn: () => apiClient.getAll(), // Fetch genres from RAWG API
-    staleTime: 24 * 60 * 60 * 1000, // Keep data fresh for 24 hours
+    staleTime: ms("24h"), // Keep data fresh for 24 hours
     initialData: genres, // Use static local data immediately (no loading flash)
   });
 

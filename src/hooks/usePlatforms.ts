@@ -1,4 +1,5 @@
 import { axiosInstance, type FetchResponse } from "@/services/api-client";
+import ms from "ms";
 import { useQuery } from "@tanstack/react-query";
 import platforms from "../data/platforms";
 export interface Platform {
@@ -24,7 +25,7 @@ const usePlatforms = () =>
       axiosInstance
         .get<FetchResponse<Platform>>("/platforms/lists/parents")
         .then((res) => res.data),
-    staleTime: 24 * 60 * 60 * 1000,
+    staleTime: ms("24h"), // 24 hr time to keep data fresh
     initialData: platforms,
   });
 
