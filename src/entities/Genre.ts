@@ -1,6 +1,6 @@
 // Define the Genre type based on RAWG's API response
 
-export interface Genre {
+export default interface Genre {
   id: number;
   name: string;
   slug: string;

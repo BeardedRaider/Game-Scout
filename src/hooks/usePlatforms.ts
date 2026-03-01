@@ -2,7 +2,7 @@ import { axiosInstance, type FetchResponse } from "@/services/api-client";
 import ms from "ms";
 import { useQuery } from "@tanstack/react-query";
 import platforms from "../data/platforms";
-import type { Platform } from "../entities/Platform";
+import type Platform from "../entities/Platform";
 const usePlatforms = () =>
   useQuery<FetchResponse<Platform>, Error>({
     queryKey: ["platforms"],
