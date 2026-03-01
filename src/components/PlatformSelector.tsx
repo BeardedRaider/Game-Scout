@@ -1,5 +1,5 @@
 import usePlatform from "@/hooks/usePlatform";
-import type { Platform } from "../hooks/usePlatforms";
+import type { Platform } from "@/entities/Platform";
 import usePlatforms from "../hooks/usePlatforms";
 import { Button, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
 import { BiChevronDown } from "react-icons/bi";

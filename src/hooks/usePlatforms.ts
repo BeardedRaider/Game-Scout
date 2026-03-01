@@ -2,22 +2,7 @@ import { axiosInstance, type FetchResponse } from "@/services/api-client";
 import ms from "ms";
 import { useQuery } from "@tanstack/react-query";
 import platforms from "../data/platforms";
-export interface Platform {
-  id: number;
-  name: string;
-  slug: string;
-  platforms: {
-    id: number;
-    name: string;
-    slug: string;
-    games_count: number;
-    image_background: string;
-    image: string | null;
-    year_start: number | null;
-    year_end: number | null;
-  }[];
-}
-
+import type { Platform } from "../entities/Platform";
 const usePlatforms = () =>
   useQuery<FetchResponse<Platform>, Error>({
     queryKey: ["platforms"],
@@ -30,3 +15,4 @@ const usePlatforms = () =>
   });
 
 export default usePlatforms;
+
