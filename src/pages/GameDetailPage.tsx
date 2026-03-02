@@ -19,18 +19,31 @@ const GameDetailPage = () => {
     <Box>
       {/* HERO BANNER */}
       <AspectRatio ratio={16 / 6} mb={6}>
-        <Box
-          backgroundImage={
-            `linear-gradient(to bottom, 
+        <Box position="relative" borderRadius={10} overflow="hidden">
+          {/* Background image + gradient overlay to make text more readable */}
+          <Box
+            position="absolute"
+            inset={0} // inset 0 means top: 0, right: 0, bottom: 0, left: 0
+            backgroundImage={`linear-gradient(to bottom, 
             rgba(0,0,0,0.3), 
             rgba(0,0,0,0.7)), 
-            url(${game.background_image})`
-          }
-          backgroundSize="cover"
-          backgroundPosition="center"
-          borderRadius={10}
-        />
+            url(${game.background_image})`}
+            backgroundSize="cover"
+            backgroundPosition="center"
+          />
+          {/* Title overlay */}
+          <Box 
+            position="absolute" 
+            bottom={4} left={4} 
+            color="white" 
+            zIndex={1}>
+            <Heading size={{ base: "lg", md: "xl", lg: "2xl" }}>
+              {game.name}
+            </Heading>
+          </Box>
+        </Box>
       </AspectRatio>
+
       <SimpleGrid columns={{ base: 1, md: 2 }} spacing={4}>
         {/* //left column, will be used for game details */}
         <Box>
