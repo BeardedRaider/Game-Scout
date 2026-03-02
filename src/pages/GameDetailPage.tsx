@@ -5,6 +5,7 @@ import GameTrailer from "@/components/GameTrailer";
 import useGame from "@/hooks/useGame";
 import { Box, Heading, SimpleGrid, Spinner } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
+import { AspectRatio } from "@chakra-ui/react";
 
 const GameDetailPage = () => {
   const { slug } = useParams();
@@ -15,21 +16,36 @@ const GameDetailPage = () => {
   if (error || !game) throw error;
 
   return (
-    <SimpleGrid columns={{ base: 1, md: 2}} spacing={4}>
-      {/* //left column, will be used for game details */}
-      <Box>
-        <Heading>{game?.name}</Heading>
-        <ExpandText>{game?.description_raw}</ExpandText>
-        <GameAttibutes game={game} />
-      </Box>
+    <Box>
+      {/* HERO BANNER */}
+      <AspectRatio ratio={16 / 6} mb={6}>
+        <Box
+          backgroundImage={
+            `linear-gradient(to bottom, 
+            rgba(0,0,0,0.3), 
+            rgba(0,0,0,0.7)), 
+            url(${game.background_image})`
+          }
+          backgroundSize="cover"
+          backgroundPosition="center"
+          borderRadius={10}
+        />
+      </AspectRatio>
+      <SimpleGrid columns={{ base: 1, md: 2 }} spacing={4}>
+        {/* //left column, will be used for game details */}
+        <Box>
+          <Heading>{game?.name}</Heading>
+          <ExpandText>{game?.description_raw}</ExpandText>
+          <GameAttibutes game={game} />
+        </Box>
 
-      {/* //right column, will be used for trailers and screenshots */}
-      <Box> 
-      <GameTrailer gameId={game.id} />
-      <GameScreenShots gameId={game.id} />
-
-      </Box>
-    </SimpleGrid >
+        {/* //right column, will be used for trailers and screenshots */}
+        <Box>
+          <GameTrailer gameId={game.id} />
+          <GameScreenShots gameId={game.id} />
+        </Box>
+      </SimpleGrid>
+    </Box>
   );
 };
 

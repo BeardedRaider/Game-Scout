@@ -7,7 +7,7 @@ interface Props {
 
 const ExpandText = ({ children }: Props) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const limit = 200; // Character limit before truncation
+  const limit = 450; // Character limit before truncation
 
   if (!children) return null;// Handle empty or undefined text
 
