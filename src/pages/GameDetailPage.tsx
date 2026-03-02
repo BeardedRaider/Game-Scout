@@ -6,6 +6,9 @@ import useGame from "@/hooks/useGame";
 import { Box, Heading, SimpleGrid, Spinner } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import { AspectRatio } from "@chakra-ui/react";
+import { Tag, TagLabel, HStack, Wrap, WrapItem } from "@chakra-ui/react";
+import CriticScore from "@/components/CriticScore";
+import PlatformIconList from "@/components/PlatformIconList";
 
 const GameDetailPage = () => {
   const { slug } = useParams();
@@ -32,11 +35,7 @@ const GameDetailPage = () => {
             backgroundPosition="center"
           />
           {/* Title overlay */}
-          <Box 
-            position="absolute" 
-            bottom={4} left={4} 
-            color="white" 
-            zIndex={1}>
+          <Box position="absolute" bottom={4} left={4} color="white" zIndex={1}>
             <Heading size={{ base: "lg", md: "xl", lg: "2xl" }}>
               {game.name}
             </Heading>
@@ -44,10 +43,75 @@ const GameDetailPage = () => {
         </Box>
       </AspectRatio>
 
+      <Box mb={4}>
+        {/* DESKTOP metadata tags section for genres, platforms, etc. */}
+        <HStack
+          spacing={6}
+          display={{ base: "none", md: "flex" }}
+          alignItems="center"
+        >
+          <Wrap>
+            {game.genres.map((genre) => (
+              <WrapItem key={genre.id}>
+                <Tag size="lg" variant="subtle" colorScheme="gray">
+                  <TagLabel>{genre.name}</TagLabel>
+                </Tag>
+              </WrapItem>
+            ))}
+          </Wrap>
+          <PlatformIconList
+            platforms={game.parent_platforms.map((p) => p.platform)}
+            size={8}
+          />
+          <Box textAlign="right">
+            <HStack spacing={2} justify="flex end" align="center">
+              <Box fontSize="sm" fontWeight="bold" color="gray.200">
+                Critic Score
+              </Box>
+              <CriticScore
+                score={game.metacritic}
+                reviewsCount={game.reviews_count}
+              />
+            </HStack>
+          </Box>
+        </HStack>
+
+        {/* MOBILE stacked vertically, desktop shows metadata tags in a horizontal row */}
+        <Box display={{ base: "block", md: "none" }} mb={4}>
+          <HStack justify="space-between" align="center">
+            <PlatformIconList
+              platforms={game.parent_platforms.map((p) => p.platform)}
+              size={6}
+            />
+
+            <Box textAlign="right">
+              <HStack spacing={2} justify="flex end" align="center">
+                <Box fontSize="sm" fontWeight="bold" color="gray.200">
+                  Rating
+                </Box>
+                <CriticScore score={game.metacritic} reviewsCount={game.reviews_count} />
+              </HStack>
+            </Box>
+          </HStack>
+
+          <Box mt={2}>
+            <Wrap>
+              {game.genres.map((genre) => (
+                <WrapItem key={genre.id}>
+                  <Tag size="sm" variant="subtle" colorScheme="gray">
+                    <TagLabel>{genre.name}</TagLabel>
+                  </Tag>
+                </WrapItem>
+              ))}
+            </Wrap>
+          </Box>
+        </Box>
+      </Box>
+
+      {/* //this is the main content area, will be a 2 column layout on desktop and stacked on mobile */}
       <SimpleGrid columns={{ base: 1, md: 2 }} spacing={4}>
-        {/* //left column, will be used for game details */}
+        {/* //left column (not mobile), will be used for game details */}
         <Box>
-          <Heading>{game?.name}</Heading>
           <ExpandText>{game?.description_raw}</ExpandText>
           <GameAttibutes game={game} />
         </Box>
