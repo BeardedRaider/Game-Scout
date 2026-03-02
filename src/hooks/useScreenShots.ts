@@ -4,11 +4,12 @@ import type ScreenShot from "@/entities/ScreenShot";
 
 
 const useScreenShots = (gameId: number) => {
-    const apiClient = new APIClient<ScreenShot>(`/games/${gameId}/screenshots`);
+    const apiClient = new APIClient<ScreenShot>(
+        `/games/${gameId}/screenshots`);
     
     return useQuery({
         queryKey: ["screenshots", gameId],
-        queryFn: apiClient.getAll
+        queryFn: () => apiClient.getAll({ params: { page_size: 9 } }),
     });
 };
     

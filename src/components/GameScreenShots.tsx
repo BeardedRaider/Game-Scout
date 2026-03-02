@@ -1,24 +1,48 @@
-import useScreenShots from '@/hooks/useScreenShots';
-import { Image, SimpleGrid } from '@chakra-ui/react';
+import { Box, Image, SimpleGrid } from "@chakra-ui/react";
+import { useState } from "react";
+import useScreenShots from "../hooks/useScreenShots";
+import ScreenshotModal from "./ScreenshotModal";
 
 interface Props {
-    gameId: number;
+  gameId: number;
 }
 
 const GameScreenShots = ({ gameId }: Props) => {
-  const {data, error, isLoading} = useScreenShots(gameId);
+  const { data, isLoading } = useScreenShots(gameId);
+  const [isOpen, setIsOpen] = useState(false);
+  const [index, setIndex] = useState(0);
 
-    if (isLoading) return null;
-    if (error) throw error;
+  if (isLoading) return null;
 
-    return (
-        <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={4}>
-            {data?.results.map( file => 
-            <Image key={file.id} src={file.image} /> )} 
-        </SimpleGrid>
-  )
-}
+  const screenshots = data?.results?.map((s) => s.image) || [];
 
+  return (
+    <Box>
+      <SimpleGrid columns={{ base: 1, sm: 2, md: 3 }} spacing={3}>
+        {screenshots.slice(0, 9).map((shot, i) => (
+          <Image
+            key={i}
+            src={shot}
+            borderRadius={8}
+            objectFit="cover"
+            cursor="pointer"
+            onClick={() => {
+              setIndex(i);
+              setIsOpen(true);
+            }}
+          />
+        ))}
+      </SimpleGrid>
 
+      <ScreenshotModal
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        screenshots={screenshots}
+        index={index}
+        setIndex={setIndex}
+      />
+    </Box>
+  );
+};
 
-export default GameScreenShots
+export default GameScreenShots;
