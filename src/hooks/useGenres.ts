@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import ms from "ms";
 import genres from "../data/genres"; // Local static genre data shaped like RAWG's API
 import type { FetchResponse } from "../services/api-client";
-import type { Genre } from "../entities/Genre";
+import type Genre from "../entities/Genre";
 
 // Create a reusable API client for the /genres endpoint
 const apiClient = new APIClient<Genre>("/genres");
