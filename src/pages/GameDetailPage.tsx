@@ -5,7 +5,17 @@ import GameScreenShots from "@/components/GameScreenShots";
 import GameTrailer from "@/components/GameTrailer";
 import PlatformIconList from "@/components/PlatformIconList";
 import useGame from "@/hooks/useGame";
-import { Box, Heading, HStack, SimpleGrid, Spinner, Tag, TagLabel, Wrap, WrapItem } from "@chakra-ui/react";
+import {
+  Box,
+  Grid,
+  Heading,
+  HStack,
+  Spinner,
+  Tag,
+  TagLabel,
+  Wrap,
+  WrapItem,
+} from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 
 const GameDetailPage = () => {
@@ -13,7 +23,6 @@ const GameDetailPage = () => {
   const { data: game, isLoading, error } = useGame(slug!);
 
   if (isLoading) return <Spinner />;
-
   if (error || !game) throw error;
 
   return (
@@ -30,22 +39,22 @@ const GameDetailPage = () => {
           position="absolute"
           inset={0}
           backgroundImage={`linear-gradient(to bottom,
-      rgba(0,0,0,0.3),
-      rgba(0,0,0,0.7)
-    ), url(${game.background_image})`}
+            rgba(0,0,0,0.3),
+            rgba(0,0,0,0.7)
+          ), url(${game.background_image})`}
           backgroundSize="cover"
           backgroundPosition="center"
         />
 
         <Box position="absolute" bottom={4} left={4} color="white" zIndex={1}>
-          <Heading size={{ base: "lg", md: "xl", lg: "2xl" }}>
+          <Heading size={{ base: "lg", md: "xl", lg: "2xl", }}>
             {game.name}
           </Heading>
         </Box>
       </Box>
 
+      {/* METADATA ROW */}
       <Box mb={4}>
-        {/* DESKTOP metadata tags section for genres, platforms, etc. */}
         <HStack
           spacing={6}
           display={{ base: "none", md: "flex" }}
@@ -60,10 +69,12 @@ const GameDetailPage = () => {
               </WrapItem>
             ))}
           </Wrap>
+
           <PlatformIconList
             platforms={game.parent_platforms.map((p) => p.platform)}
             size={8}
           />
+
           <Box textAlign="right">
             <HStack spacing={2} justify="flex-end" align="center">
               <Box fontSize="sm" fontWeight="bold" color="gray.200">
@@ -77,7 +88,7 @@ const GameDetailPage = () => {
           </Box>
         </HStack>
 
-        {/* MOBILE stacked vertically, desktop shows metadata tags in a horizontal row */}
+        {/* MOBILE METADATA */}
         <Box display={{ base: "block", md: "none" }} mb={4}>
           <HStack justify="space-between" align="center">
             <PlatformIconList
@@ -112,20 +123,58 @@ const GameDetailPage = () => {
         </Box>
       </Box>
 
-      {/* //this is the main content area, will be a 2 column layout on desktop and stacked on mobile */}
-      <SimpleGrid columns={{ base: 1, md: 2 }} spacing={4}>
-        {/* //left column (not mobile), will be used for game details */}
+      {/* ============================
+          TOP ROW (Description + Trailer)
+          ============================ */}
+      <Grid templateColumns={{ base: "1fr", md: "1fr 1fr" }} gap={8} mb={10}>
+        {/* LEFT: DESCRIPTION */}
         <Box>
-          <ExpandText>{game?.description_raw}</ExpandText>
-          <GameAttibutes game={game} />
+          <Heading size="md" mb={3} color="gray.100">
+            Description
+          </Heading>
+          <ExpandText>{game.description_raw}</ExpandText>
         </Box>
 
-        {/* //right column, will be used for trailers and screenshots */}
+        {/* RIGHT: TRAILER */}
         <Box>
           <GameTrailer gameId={game.id} />
+        </Box>
+      </Grid>
+
+      {/* ============================
+          BOTTOM ROW (Screenshots + Additional Info)
+          ============================ */}
+      <Grid 
+      templateColumns={{ base: "1fr", md: "1fr auto",}} gap={6}>
+        {/* LEFT: SCREENSHOTS */}
+        <Box>
+          <Heading size="md" mb={3} color="gray.100">
+            Screenshots
+          </Heading>
           <GameScreenShots gameId={game.id} />
         </Box>
-      </SimpleGrid>
+
+        {/* RIGHT: ADDITIONAL INFO */}
+        
+          <Box
+            maxW={{ base: "100%", md: "320px", lg: "360px" }}
+            ml={{ base: 0, md: "auto" }}>
+            <Heading size="md" mb={3} color="gray.100">
+              Additional Information
+            </Heading>
+
+            <Box
+              p={4}
+              borderRadius="md"
+              bg="gray.700"
+              border="1px solid"
+              borderColor="gray.600"
+            >
+              <GameAttibutes game={game} />
+            </Box>
+          </Box>
+        
+      </Grid>
     </Box>
   );
 };

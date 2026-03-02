@@ -46,6 +46,7 @@ const EsrbBadge = ({ rating }: Props) => {
       <Badge
         colorScheme={color}
         fontSize="md"
+        marginTop={1}
         paddingX={3}
         paddingY={1}
         borderRadius="md"
