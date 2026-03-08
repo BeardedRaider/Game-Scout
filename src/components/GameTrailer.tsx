@@ -3,6 +3,7 @@ import useYouTubeTrailer from "@/hooks/useYouTubeTrailer";
 import YouTubeTrailer from "./YouTubeTrailer";
 import TrailerSkeleton from "./TrailerSkeleton";
 import { AspectRatio } from "@chakra-ui/react";
+import FadeIn from "./FadeIn";
 
 interface Props {
   gameId: number;
@@ -21,6 +22,7 @@ const GameTrailer = ({ gameId, gameName }: Props) => {
   // RAWG trailer exists
   if (rawgTrailer) {
     return (
+      <FadeIn>
       <AspectRatio
         ratio={16 / 9}
         width="100%"
@@ -34,6 +36,7 @@ const GameTrailer = ({ gameId, gameName }: Props) => {
           style={{ width: "100%", height: "100%" }}
         />
       </AspectRatio>
+      </FadeIn>
     );
   }
 
