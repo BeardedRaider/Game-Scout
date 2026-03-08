@@ -4,7 +4,7 @@ import type Publisher from "./Publisher";
 
 export default interface Game {
   background_image: string;
-  
+
   id: number;
   name: string;
   slug: string;
@@ -18,9 +18,17 @@ export default interface Game {
   playtime: number;
   rating_top: number;
   reviews_count: number;
-  
+
   publishers: Publisher[];
   developers: { id: number; name: string }[];
-  
+
   esrb_rating: { id: number; name: string } | null;
+
+  stores: {
+    store: {
+      id: number;
+      name: string;
+    };
+    url: string;
+  }[];
 }

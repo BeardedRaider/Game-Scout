@@ -47,7 +47,7 @@ const GameDetailPage = () => {
         />
 
         <Box position="absolute" bottom={4} left={4} color="white" zIndex={1}>
-          <Heading size={{ base: "lg", md: "xl", lg: "2xl", }}>
+          <Heading size={{ base: "lg", md: "xl", lg: "2xl" }}>
             {game.name}
           </Heading>
         </Box>
@@ -137,15 +137,16 @@ const GameDetailPage = () => {
 
         {/* RIGHT: TRAILER */}
         <Box>
-          <GameTrailer gameId={game.id} />
+          <GameTrailer 
+            gameId={game.id} 
+            gameName={game.name} />
         </Box>
       </Grid>
 
       {/* ============================
           BOTTOM ROW (Screenshots + Additional Info)
           ============================ */}
-      <Grid 
-      templateColumns={{ base: "1fr", md: "1fr auto",}} gap={6}>
+      <Grid templateColumns={{ base: "1fr", md: "1fr auto" }} gap={6}>
         {/* LEFT: SCREENSHOTS */}
         <Box>
           <Heading size="md" mb={3} color="gray.100">
@@ -155,25 +156,25 @@ const GameDetailPage = () => {
         </Box>
 
         {/* RIGHT: ADDITIONAL INFO */}
-        
-          <Box
-            maxW={{ base: "100%", md: "320px", lg: "360px" }}
-            ml={{ base: 0, md: "auto" }}>
-            <Heading size="md" mb={3} color="gray.100">
-              Additional Information
-            </Heading>
 
-            <Box
-              p={4}
-              borderRadius="md"
-              bg="gray.700"
-              border="1px solid"
-              borderColor="gray.600"
-            >
-              <GameAttibutes game={game} />
-            </Box>
+        <Box
+          maxW={{ base: "100%", md: "320px", lg: "360px" }}
+          ml={{ base: 0, md: "auto" }}
+        >
+          <Heading size="md" mb={3} color="gray.100">
+            Additional Information
+          </Heading>
+
+          <Box
+            p={4}
+            borderRadius="md"
+            bg="gray.700"
+            border="1px solid"
+            borderColor="gray.600"
+          >
+            <GameAttibutes game={game} />
           </Box>
-        
+        </Box>
       </Grid>
     </Box>
   );

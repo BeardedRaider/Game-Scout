@@ -1,23 +1,50 @@
 import useTrailers from "@/hooks/useTrailers";
+import useYouTubeTrailer from "@/hooks/useYouTubeTrailer";
+import YouTubeTrailer from "./YouTubeTrailer";
+import TrailerSkeleton from "./TrailerSkeleton";
+import { AspectRatio } from "@chakra-ui/react";
 
 interface Props {
   gameId: number;
+  gameName: string;
 }
 
-const GameTrailer = ({ gameId }: Props) => {
-  const { data, error, isLoading } = useTrailers(gameId);
+const GameTrailer = ({ gameId, gameName }: Props) => {
+  const { data: trailerData, isLoading: rawgLoading } = useTrailers(gameId);
+  const { data: youtubeId, isLoading: ytLoading } = useYouTubeTrailer(gameName);
 
-  if (isLoading) return null;
-  if (error) throw error;
+  const rawgTrailer = trailerData?.results?.[0];
 
-  const first = data?.results[0];
-  return first ? (
-    <video 
-    src={first.data[480]} 
-    poster={first.preview} 
-    controls 
-    />
-  ) : null;
+  // RAWG loading → skeleton
+  if (rawgLoading) return <TrailerSkeleton />;
+
+  // RAWG trailer exists
+  if (rawgTrailer) {
+    return (
+      <AspectRatio
+        ratio={16 / 9}
+        width="100%"
+        borderRadius="8px"
+        overflow="hidden"
+      >
+        <video
+          src={rawgTrailer.data.max}
+          poster={rawgTrailer.preview}
+          controls
+          style={{ width: "100%", height: "100%" }}
+        />
+      </AspectRatio>
+    );
+  }
+
+  // RAWG missing → YouTube loading → skeleton
+  if (ytLoading) return <TrailerSkeleton />;
+
+  // YouTube trailer exists
+  if (youtubeId) return <YouTubeTrailer videoId={youtubeId} />;
+
+  // Nothing available
+  return <p>Trailer not available</p>;
 };
 
 export default GameTrailer;
