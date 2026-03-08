@@ -1,9 +1,11 @@
 import useTrailers from "@/hooks/useTrailers";
 import useYouTubeTrailer from "@/hooks/useYouTubeTrailer";
-import YouTubeTrailer from "./YouTubeTrailer";
-import TrailerSkeleton from "./TrailerSkeleton";
 import { AspectRatio } from "@chakra-ui/react";
 import FadeIn from "./FadeIn";
+import TrailerSkeleton from "./TrailerSkeleton";
+import YouTubeTrailer from "./YouTubeTrailer";
+import BlurredPoster from "./BlurredPoster";
+import { useState } from "react";
 
 interface Props {
   gameId: number;
@@ -16,27 +18,36 @@ const GameTrailer = ({ gameId, gameName }: Props) => {
 
   const rawgTrailer = trailerData?.results?.[0];
 
+  // ❗ Hook must be here, not inside the if()
+  const [loaded, setLoaded] = useState(false);
+
   // RAWG loading → skeleton
   if (rawgLoading) return <TrailerSkeleton />;
 
   // RAWG trailer exists
   if (rawgTrailer) {
     return (
-      <FadeIn>
-      <AspectRatio
-        ratio={16 / 9}
-        width="100%"
-        borderRadius="8px"
-        overflow="hidden"
-      >
-        <video
-          src={rawgTrailer.data.max}
-          poster={rawgTrailer.preview}
-          controls
-          style={{ width: "100%", height: "100%" }}
-        />
-      </AspectRatio>
-      </FadeIn>
+      <>
+        {!loaded && <BlurredPoster poster={rawgTrailer.preview} />}
+
+        <FadeIn>
+          <AspectRatio
+            ratio={16 / 9}
+            width="100%"
+            borderRadius="8px"
+            overflow="hidden"
+            style={{ display: loaded ? "block" : "none" }}
+          >
+            <video
+              src={rawgTrailer.data.max}
+              poster={rawgTrailer.preview}
+              controls
+              onLoadedData={() => setLoaded(true)}
+              style={{ width: "100%", height: "100%" }}
+            />
+          </AspectRatio>
+        </FadeIn>
+      </>
     );
   }
 
