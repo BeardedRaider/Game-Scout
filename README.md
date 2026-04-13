@@ -1,73 +1,180 @@
-# React + TypeScript + Vite
+# 🎮 GameScout — A Responsive Web App for Video Game Discovery
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+GameScout is a modern, responsive web application designed to streamline the process of discovering video games. It provides real‑time data from the RAWG API, a clean and accessible UI, and a fast, mobile‑first experience.  
+This project was developed as part of a BSc (Hons) Web & Mobile Development Honours Project at the University of the West of Scotland.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Features
 
-## React Compiler
+- 🔍 **Real‑time search** with instant results  
+- 🎚️ **Dynamic filtering** (genre, platform, release date)  
+- 🌙 **Dark mode** with Chakra UI’s colour‑mode system  
+- 🎥 **Trailer system** with:
+  - RAWG MP4 trailers  
+  - YouTube fallback  
+  - Shimmer loading states  
+  - Blurred poster placeholders  
+  - Smooth fade‑in transitions  
+- 📱 **Fully responsive** mobile‑first layout  
+- ♿ **Accessibility‑focused design** (ARIA labels, keyboard navigation, semantic structure)  
+- ⚡ **Fast performance** using Vite + React + TypeScript  
+- 🧩 **Component‑based architecture** for scalability and maintainability  
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 🧪 Framework Comparison (Project Context)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+This project was created to evaluate **CSS frameworks in a real‑world UX application**, comparing:
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### **Tailwind CSS (early prototype)**
+- Utility‑first  
+- Fast prototyping  
+- Highly flexible  
+- Verbose markup  
+- Requires careful structure for maintainability  
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### **Chakra UI (final implementation)**
+- Component‑driven  
+- Built‑in accessibility  
+- Consistent spacing, colour, and typography  
+- Faster development workflow  
+- Better long‑term maintainability  
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+The final version of GameScout uses **Chakra UI**, informed by the comparative findings documented in the Honours dissertation.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 🛠️ Tech Stack
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- **React 18**
+- **TypeScript**
+- **Vite**
+- **Chakra UI**
+- **RAWG Video Games Database API**
+- **Axios**
+- **React Router**
+- **Netlify (deployment)**
+
+---
+
+## 📁 Project Structure
+
+src/
+├── components/
+│    ├── GameCard/
+│    ├── GameGrid/
+│    ├── Trailer/
+│    ├── FilterPanel/
+│    └── Navbar/
+├── pages/
+│    ├── Games.tsx
+│    ├── GameDetails.tsx
+│    └── Home.tsx
+├── hooks/
+│    ├── useGames.ts
+│    ├── useGenres.ts
+│    └── usePlatforms.ts
+├── theme/
+├── assets/
+└── main.tsx
+
+
+---
+
+## 🔌 RAWG API Usage
+
+GameScout uses the RAWG API to fetch:
+
+- Game lists  
+- Search results  
+- Genres  
+- Platforms  
+- Game details  
+- Trailers & screenshots  
+
+You must provide your own API key:
+
+
+---
+
+## ♿ Accessibility
+
+GameScout was built with accessibility as a core requirement:
+
+- Semantic HTML  
+- ARIA labels  
+- Keyboard‑friendly navigation  
+- High‑contrast colour modes  
+- Screen‑reader‑friendly structure  
+- Chakra UI’s accessible components  
+
+---
+
+## 📦 Installation & Setup
+
+Clone the repository:
+
+```bash
+git clone https://github.com/BeardedRaider/Game-Scout.git
+cd GameScout
+
+Install dependencies:
+npm install
+
+Add your RAWG API key:
+VITE_RAWG_API_KEY= (stored in env for security)
+
+Run the development server:
+npm run dev
+
+Build for production:
+npm run build
+
+Preview the build:
+npm run preview
+
+🌐 Deployment
+
+GameScout is deployed using Netlify with:
+
+    Continuous deployment from GitHub
+
+    Environment variables stored securely
+
+    SPA routing handled via _redirects
+
+    Author
+
+Honours Project
+
+This project was developed as part of:
+
+BSc (Hons) Web & Mobile Development  
+University of the West of Scotland
+Honours Project 2025/26
+
+The full dissertation includes:
+
+    Literature review
+
+    Framework comparison
+
+    UX evaluation
+
+    Accessibility testing
+
+    Performance analysis
+
+    Developer‑led heuristic evaluation
+
+
+License
+
+This project is for educational and academic purposes.
+You may fork or reference it, but please credit the original author.
+
+Shane Crossman  
+B01740631
+University of the West of Scotland
+2025/26
